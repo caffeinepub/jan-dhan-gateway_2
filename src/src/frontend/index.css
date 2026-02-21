@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+    
+    /* Navy & Forest Green Government Palette - Light Mode */
+    --background: 0.98 0.005 240;
+    --foreground: 0.18 0.02 250;
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.02 250;
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.02 250;
+    
+    /* Navy Primary */
+    --primary: 0.35 0.08 250;
+    --primary-foreground: 0.98 0.005 240;
+    
+    /* Forest Green Success */
+    --secondary: 0.55 0.10 145;
+    --secondary-foreground: 0.98 0.005 145;
+    
+    /* Muted Navy-Gray */
+    --muted: 0.94 0.008 240;
+    --muted-foreground: 0.48 0.02 250;
+    
+    /* Amber Accent */
+    --accent: 0.75 0.12 75;
+    --accent-foreground: 0.18 0.02 75;
+    
+    /* Crimson Destructive */
+    --destructive: 0.55 0.20 25;
+    --destructive-foreground: 0.98 0 0;
+    
+    /* Borders & Inputs */
+    --border: 0.88 0.01 240;
+    --input: 0.88 0.01 240;
+    --ring: 0.35 0.08 250;
+    
+    /* Charts - Government palette */
+    --chart-1: 0.35 0.08 250;
+    --chart-2: 0.55 0.10 145;
+    --chart-3: 0.75 0.12 75;
+    --chart-4: 0.55 0.20 25;
+    --chart-5: 0.65 0.08 280;
+    
+    /* Sidebar - Navy theme */
+    --sidebar: 0.25 0.05 250;
+    --sidebar-foreground: 0.92 0.008 240;
+    --sidebar-primary: 0.55 0.10 145;
+    --sidebar-primary-foreground: 0.98 0.005 145;
+    --sidebar-accent: 0.32 0.06 250;
+    --sidebar-accent-foreground: 0.92 0.008 240;
+    --sidebar-border: 0.32 0.04 250;
+    --sidebar-ring: 0.55 0.10 145;
+    
+    /* Success & Warning states */
+    --success: 0.55 0.10 145;
+    --success-foreground: 0.98 0.005 145;
+    --warning: 0.75 0.12 75;
+    --warning-foreground: 0.18 0.02 75;
+  }
+
+  .dark {
+    /* Navy & Forest Green Government Palette - Dark Mode */
+    --background: 0.15 0.02 250;
+    --foreground: 0.92 0.008 240;
+    --card: 0.20 0.03 250;
+    --card-foreground: 0.92 0.008 240;
+    --popover: 0.18 0.025 250;
+    --popover-foreground: 0.92 0.008 240;
+    
+    /* Lighter Navy Primary for dark */
+    --primary: 0.65 0.10 240;
+    --primary-foreground: 0.15 0.02 250;
+    
+    /* Lighter Forest Green */
+    --secondary: 0.65 0.12 145;
+    --secondary-foreground: 0.15 0.02 145;
+    
+    /* Muted */
+    --muted: 0.25 0.03 250;
+    --muted-foreground: 0.68 0.02 240;
+    
+    /* Amber Accent */
+    --accent: 0.70 0.14 75;
+    --accent-foreground: 0.15 0.02 75;
+    
+    /* Crimson Destructive */
+    --destructive: 0.60 0.22 25;
+    --destructive-foreground: 0.98 0 0;
+    
+    /* Borders & Inputs */
+    --border: 0.30 0.04 250;
+    --input: 0.30 0.04 250;
+    --ring: 0.65 0.10 240;
+    
+    /* Charts */
+    --chart-1: 0.65 0.10 240;
+    --chart-2: 0.65 0.12 145;
+    --chart-3: 0.70 0.14 75;
+    --chart-4: 0.60 0.22 25;
+    --chart-5: 0.70 0.10 280;
+    
+    /* Sidebar */
+    --sidebar: 0.18 0.025 250;
+    --sidebar-foreground: 0.92 0.008 240;
+    --sidebar-primary: 0.65 0.12 145;
+    --sidebar-primary-foreground: 0.15 0.02 145;
+    --sidebar-accent: 0.25 0.04 250;
+    --sidebar-accent-foreground: 0.92 0.008 240;
+    --sidebar-border: 0.25 0.04 250;
+    --sidebar-ring: 0.65 0.12 145;
+    
+    /* Success & Warning states */
+    --success: 0.65 0.12 145;
+    --success-foreground: 0.15 0.02 145;
+    --warning: 0.70 0.14 75;
+    --warning-foreground: 0.15 0.02 75;
+  }
+
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+  
+  /* Loading skeleton pulse animation */
+  @keyframes skeleton-pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  /* Smooth fade-in for page transitions */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Scale in animation for cards */
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .animate-skeleton {
+    animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out;
+  }
+}
