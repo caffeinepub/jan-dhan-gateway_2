@@ -2,47 +2,42 @@
 
 ## Current State
 
-The system currently:
-- Accepts citizen data via CSV/Excel import
-- Sets ALL imported citizens to `aadhaarStatus = #unlinked` by default (hardcoded in backend)
-- Does NOT read the `Aadhaar_Linked` column from the dataset
-- User's dataset has `Aadhaar_Linked=TRUE` for all citizens, but this is being ignored
+The application currently accepts Excel files (.xlsx, .xls) for bulk citizen data import. The ImportDataPage component:
+- Uses the SheetJS (xlsx) library loaded from CDN
+- Accepts only Excel file formats
+- Parses Excel sheets and converts them to JSON
+- Maps column data to citizen records with proper type conversions
 
 ## Requested Changes (Diff)
 
 ### Add
-- Support for reading `Aadhaar_Linked` column during CSV/Excel import
-- Logic to convert TRUE/FALSE from dataset to linked/unlinked status
+- CSV file format support for citizen data import
+- CSV parsing logic to handle comma-separated values
+- Support for standard CSV with headers matching the current Excel column structure
 
 ### Modify
-- Backend `InputCitizen` type to include `aadhaarStatus` field
-- Backend `addCitizen` and `addCitizens` functions to accept and use aadhaarStatus from input
-- Frontend import logic to parse `Aadhaar_Linked` column and map to AadhaarStatus enum
-- Frontend to send correct aadhaarStatus when importing citizens
+- File input to accept `.csv` files in addition to Excel formats
+- File validation to check for CSV format
+- Import logic to detect file type (CSV vs Excel) and parse accordingly
+- UI text and instructions to reflect CSV support
 
 ### Remove
-- Hardcoded `aadhaarStatus = #unlinked` default in backend
+- Excel-only file format restriction
+- Excel-only messaging in the UI
 
 ## Implementation Plan
 
-1. **Update backend Motoko code**:
-   - Add `aadhaarStatus` to `InputCitizen` type
-   - Update `addCitizen` and `addCitizens` to use the provided aadhaarStatus instead of hardcoding #unlinked
-   - Add `accountStatus` to `InputCitizen` as well for consistency
-
-2. **Update frontend import logic**:
-   - Parse `Aadhaar_Linked` column (TRUE/FALSE)
-   - Parse `Account_Status` column (Active/Inactive)
-   - Map to correct enum values (linked/unlinked, active/inactive)
-   - Send correct status values when calling addCitizens
-
-3. **Validate**:
-   - Test import with user's dataset
-   - Verify Aadhaar status displays correctly after import
-   - Verify validation gates work correctly
+1. Update ImportDataPage component to accept CSV files
+2. Add CSV parsing logic using native JavaScript (no external library needed)
+3. Keep existing Excel parsing for backward compatibility
+4. Update file input accept attribute to include `.csv`
+5. Update UI text to mention CSV support
+6. Add file type detection logic to route to appropriate parser
 
 ## UX Notes
 
-- When users import data with `Aadhaar_Linked=TRUE`, those citizens should show "Linked" status
-- When users import data with `Account_Status=Active`, those citizens should show "Active" status
-- The three-gate validation should work correctly based on imported statuses
+- Users can now upload either CSV or Excel files
+- CSV files should have the same column headers as Excel format
+- CSV format will be simpler for users who don't have Excel
+- Expected CSV columns: Citizen_ID, Name, DOB, Gender, Marital_Status, Account_Status, Aadhaar_Linked, Scheme_Eligibility, Scheme_Amount
+- File validation will guide users if wrong format is uploaded

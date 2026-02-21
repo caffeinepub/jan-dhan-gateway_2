@@ -66,14 +66,69 @@ export default function ImportDataPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      if (!selectedFile.name.endsWith(".xlsx") && !selectedFile.name.endsWith(".xls")) {
+      const isExcel = selectedFile.name.endsWith(".xlsx") || selectedFile.name.endsWith(".xls");
+      const isCsv = selectedFile.name.endsWith(".csv");
+      
+      if (!isExcel && !isCsv) {
         toast.error("Invalid file type", {
-          description: "Please upload an Excel file (.xlsx or .xls)",
+          description: "Please upload a CSV or Excel file (.csv, .xlsx, or .xls)",
         });
         return;
       }
       setFile(selectedFile);
     }
+  };
+
+  const parseCSV = async (file: File): Promise<ExcelRow[]> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        try {
+          const text = e.target?.result as string;
+          const lines = text.split(/\r?\n/).filter(line => line.trim());
+          
+          if (lines.length < 2) {
+            reject(new Error("CSV file must contain at least a header row and one data row"));
+            return;
+          }
+
+          // Parse header row
+          const headers = lines[0].split(",").map(h => h.trim().replace(/^"|"$/g, ""));
+          
+          // Parse data rows
+          const rows: ExcelRow[] = [];
+          for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(",").map(v => v.trim().replace(/^"|"$/g, ""));
+            const row: any = {};
+            
+            headers.forEach((header, index) => {
+              row[header] = values[index] || "";
+            });
+            
+            // Convert to ExcelRow format
+            rows.push({
+              Citizen_ID: row.Citizen_ID || "",
+              Name: row.Name || "",
+              DOB: row.DOB || "",
+              Gender: row.Gender || "",
+              Marital_Status: row.Marital_Status || "",
+              Account_Status: row.Account_Status || "",
+              Aadhaar_Linked: row.Aadhaar_Linked || "",
+              Scheme_Eligibility: row.Scheme_Eligibility || "",
+              Scheme_Amount: parseFloat(row.Scheme_Amount) || 0,
+            });
+          }
+          
+          resolve(rows);
+        } catch (error) {
+          reject(new Error("Failed to parse CSV file: " + (error instanceof Error ? error.message : "Unknown error")));
+        }
+      };
+      
+      reader.onerror = () => reject(new Error("Failed to read file"));
+      reader.readAsText(file);
+    });
   };
 
   const handleImport = async () => {
@@ -86,24 +141,33 @@ export default function ImportDataPage() {
     setProgress(0);
 
     try {
-      // Load xlsx from CDN at runtime
-      if (!(window as any).XLSX) {
-        const script = document.createElement("script");
-        script.src = "https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js";
-        await new Promise((resolve, reject) => {
-          script.onload = resolve;
-          script.onerror = reject;
-          document.head.appendChild(script);
-        });
-      }
-
-      const XLSX = (window as any).XLSX;
+      let jsonData: ExcelRow[];
       
-      const data = await file.arrayBuffer();
-      const workbook = XLSX.read(data, { type: "array" });
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json(worksheet) as ExcelRow[];
+      // Detect file type and parse accordingly
+      if (file.name.endsWith(".csv")) {
+        // Parse CSV
+        jsonData = await parseCSV(file);
+      } else {
+        // Parse Excel
+        // Load xlsx from CDN at runtime
+        if (!(window as any).XLSX) {
+          const script = document.createElement("script");
+          script.src = "https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js";
+          await new Promise((resolve, reject) => {
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
+        }
+
+        const XLSX = (window as any).XLSX;
+        
+        const data = await file.arrayBuffer();
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        jsonData = XLSX.utils.sheet_to_json(worksheet) as ExcelRow[];
+      }
 
       setTotal(jsonData.length);
 
@@ -150,13 +214,13 @@ export default function ImportDataPage() {
     <div className="max-w-4xl space-y-8 animate-fade-in">
       <div>
         <h1 className="text-3xl font-display font-bold text-foreground">Import Data</h1>
-        <p className="text-muted-foreground mt-1">Bulk import citizen records from Excel</p>
+        <p className="text-muted-foreground mt-1">Bulk import citizen records from CSV or Excel</p>
       </div>
 
       <Alert>
         <Info className="h-4 w-4" />
         <AlertDescription>
-          <p className="font-semibold mb-2">Required Excel columns:</p>
+          <p className="font-semibold mb-2">Required columns (CSV or Excel):</p>
           <ul className="list-disc list-inside text-sm space-y-1">
             <li>
               <span className="font-mono">Citizen_ID</span> - 12-digit unique identifier
@@ -194,11 +258,10 @@ export default function ImportDataPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileSpreadsheet className="h-5 w-5" />
-            Upload Excel File
+            Upload Data File
           </CardTitle>
           <CardDescription>
-            Upload <span className="font-mono">jan_dhan_registry_advanced.xlsx</span> or compatible
-            format
+            Upload CSV or Excel file with citizen data
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -206,7 +269,7 @@ export default function ImportDataPage() {
             <input
               ref={fileInputRef}
               type="file"
-              accept=".xlsx,.xls"
+              accept=".csv,.xlsx,.xls"
               onChange={handleFileChange}
               className="hidden"
               id="file-upload"
@@ -221,10 +284,10 @@ export default function ImportDataPage() {
               </div>
               <div>
                 <p className="text-lg font-semibold">
-                  {file ? file.name : "Click to upload Excel file"}
+                  {file ? file.name : "Click to upload data file"}
                 </p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Supports .xlsx and .xls formats
+                  Supports CSV (.csv), Excel (.xlsx, .xls) formats
                 </p>
               </div>
               {!file && (
