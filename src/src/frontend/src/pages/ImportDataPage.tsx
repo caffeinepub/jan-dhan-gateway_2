@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Upload, FileSpreadsheet, Info, CheckCircle2 } from "lucide-react";
 import { parseDOB } from "@/lib/helpers";
 import { toast } from "sonner";
-import { Gender, MaritalStatus, type InputCitizen } from "../backend";
+import { Gender, MaritalStatus, AccountStatus, AadhaarStatus, type InputCitizen } from "../backend";
 
 interface ExcelRow {
   Citizen_ID: string | number;
@@ -44,6 +44,23 @@ export default function ImportDataPage() {
     if (normalized === "divorced") return MaritalStatus.divorced;
     if (normalized === "widowed") return MaritalStatus.widowed;
     return MaritalStatus.single;
+  };
+
+  const mapAccountStatus = (status: string): AccountStatus => {
+    const normalized = status.toLowerCase().trim();
+    if (normalized === "active") return AccountStatus.active;
+    if (normalized === "inactive") return AccountStatus.inactive;
+    return AccountStatus.active; // Default to active
+  };
+
+  const mapAadhaarStatus = (status: string): AadhaarStatus => {
+    const normalized = status.toLowerCase().trim();
+    // Handle TRUE/true/Yes/yes/Linked/linked
+    if (normalized === "true" || normalized === "yes" || normalized === "linked") {
+      return AadhaarStatus.linked;
+    }
+    // Handle FALSE/false/No/no/Unlinked/unlinked
+    return AadhaarStatus.unlinked;
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,6 +116,8 @@ export default function ImportDataPage() {
           dob: parseDOB(row.DOB),
           gender: mapGender(row.Gender),
           maritalStatus: mapMaritalStatus(row.Marital_Status),
+          accountStatus: mapAccountStatus(row.Account_Status),
+          aadhaarStatus: mapAadhaarStatus(row.Aadhaar_Linked),
           scheme: row.Scheme_Eligibility || "",
           amount: BigInt(Math.round(row.Scheme_Amount || 0)),
         };

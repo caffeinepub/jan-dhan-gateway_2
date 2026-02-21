@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,121 +6,121 @@
 
 @layer base {
   :root {
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     
-    /* Navy & Forest Green Government Palette - Light Mode */
-    --background: 0.98 0.005 240;
-    --foreground: 0.18 0.02 250;
+    /* Bold Civic Tech Palette - Light Mode */
+    --background: 0.99 0.003 90;
+    --foreground: 0.15 0.03 260;
     --card: 1 0 0;
-    --card-foreground: 0.18 0.02 250;
+    --card-foreground: 0.15 0.03 260;
     --popover: 1 0 0;
-    --popover-foreground: 0.18 0.02 250;
+    --popover-foreground: 0.15 0.03 260;
     
-    /* Navy Primary */
-    --primary: 0.35 0.08 250;
-    --primary-foreground: 0.98 0.005 240;
+    /* Vibrant Teal Primary */
+    --primary: 0.52 0.16 195;
+    --primary-foreground: 0.99 0.003 195;
     
-    /* Forest Green Success */
-    --secondary: 0.55 0.10 145;
-    --secondary-foreground: 0.98 0.005 145;
+    /* Electric Coral Accent */
+    --secondary: 0.68 0.20 25;
+    --secondary-foreground: 0.99 0 0;
     
-    /* Muted Navy-Gray */
-    --muted: 0.94 0.008 240;
-    --muted-foreground: 0.48 0.02 250;
+    /* Soft Lavender Muted */
+    --muted: 0.96 0.01 280;
+    --muted-foreground: 0.50 0.04 270;
     
-    /* Amber Accent */
-    --accent: 0.75 0.12 75;
-    --accent-foreground: 0.18 0.02 75;
+    /* Sunny Yellow Accent */
+    --accent: 0.85 0.15 90;
+    --accent-foreground: 0.20 0.04 90;
     
-    /* Crimson Destructive */
-    --destructive: 0.55 0.20 25;
-    --destructive-foreground: 0.98 0 0;
+    /* Deep Magenta Destructive */
+    --destructive: 0.48 0.24 350;
+    --destructive-foreground: 0.99 0 0;
     
     /* Borders & Inputs */
-    --border: 0.88 0.01 240;
-    --input: 0.88 0.01 240;
-    --ring: 0.35 0.08 250;
+    --border: 0.91 0.01 260;
+    --input: 0.91 0.01 260;
+    --ring: 0.52 0.16 195;
     
-    /* Charts - Government palette */
-    --chart-1: 0.35 0.08 250;
-    --chart-2: 0.55 0.10 145;
-    --chart-3: 0.75 0.12 75;
-    --chart-4: 0.55 0.20 25;
-    --chart-5: 0.65 0.08 280;
+    /* Charts - Vibrant civic palette */
+    --chart-1: 0.52 0.16 195;
+    --chart-2: 0.68 0.20 25;
+    --chart-3: 0.85 0.15 90;
+    --chart-4: 0.48 0.24 350;
+    --chart-5: 0.60 0.18 150;
     
-    /* Sidebar - Navy theme */
-    --sidebar: 0.25 0.05 250;
-    --sidebar-foreground: 0.92 0.008 240;
-    --sidebar-primary: 0.55 0.10 145;
-    --sidebar-primary-foreground: 0.98 0.005 145;
-    --sidebar-accent: 0.32 0.06 250;
-    --sidebar-accent-foreground: 0.92 0.008 240;
-    --sidebar-border: 0.32 0.04 250;
-    --sidebar-ring: 0.55 0.10 145;
+    /* Sidebar - Teal theme */
+    --sidebar: 0.97 0.01 195;
+    --sidebar-foreground: 0.15 0.03 260;
+    --sidebar-primary: 0.52 0.16 195;
+    --sidebar-primary-foreground: 0.99 0.003 195;
+    --sidebar-accent: 0.94 0.02 195;
+    --sidebar-accent-foreground: 0.15 0.03 260;
+    --sidebar-border: 0.91 0.01 260;
+    --sidebar-ring: 0.52 0.16 195;
     
     /* Success & Warning states */
-    --success: 0.55 0.10 145;
-    --success-foreground: 0.98 0.005 145;
-    --warning: 0.75 0.12 75;
-    --warning-foreground: 0.18 0.02 75;
+    --success: 0.60 0.18 150;
+    --success-foreground: 0.99 0 0;
+    --warning: 0.75 0.16 65;
+    --warning-foreground: 0.20 0.04 65;
   }
 
   .dark {
-    /* Navy & Forest Green Government Palette - Dark Mode */
-    --background: 0.15 0.02 250;
-    --foreground: 0.92 0.008 240;
-    --card: 0.20 0.03 250;
-    --card-foreground: 0.92 0.008 240;
-    --popover: 0.18 0.025 250;
-    --popover-foreground: 0.92 0.008 240;
+    /* Bold Civic Tech Palette - Dark Mode */
+    --background: 0.12 0.03 260;
+    --foreground: 0.95 0.01 90;
+    --card: 0.18 0.04 260;
+    --card-foreground: 0.95 0.01 90;
+    --popover: 0.15 0.035 260;
+    --popover-foreground: 0.95 0.01 90;
     
-    /* Lighter Navy Primary for dark */
-    --primary: 0.65 0.10 240;
-    --primary-foreground: 0.15 0.02 250;
+    /* Brighter Teal for dark */
+    --primary: 0.68 0.18 195;
+    --primary-foreground: 0.12 0.03 195;
     
-    /* Lighter Forest Green */
-    --secondary: 0.65 0.12 145;
-    --secondary-foreground: 0.15 0.02 145;
+    /* Brighter Coral */
+    --secondary: 0.72 0.22 25;
+    --secondary-foreground: 0.12 0 0;
     
     /* Muted */
-    --muted: 0.25 0.03 250;
-    --muted-foreground: 0.68 0.02 240;
+    --muted: 0.22 0.04 270;
+    --muted-foreground: 0.70 0.03 280;
     
-    /* Amber Accent */
-    --accent: 0.70 0.14 75;
-    --accent-foreground: 0.15 0.02 75;
+    /* Brighter Yellow */
+    --accent: 0.82 0.17 90;
+    --accent-foreground: 0.12 0.03 90;
     
-    /* Crimson Destructive */
-    --destructive: 0.60 0.22 25;
-    --destructive-foreground: 0.98 0 0;
+    /* Bright Magenta */
+    --destructive: 0.60 0.26 350;
+    --destructive-foreground: 0.99 0 0;
     
     /* Borders & Inputs */
-    --border: 0.30 0.04 250;
-    --input: 0.30 0.04 250;
-    --ring: 0.65 0.10 240;
+    --border: 0.28 0.05 270;
+    --input: 0.28 0.05 270;
+    --ring: 0.68 0.18 195;
     
     /* Charts */
-    --chart-1: 0.65 0.10 240;
-    --chart-2: 0.65 0.12 145;
-    --chart-3: 0.70 0.14 75;
-    --chart-4: 0.60 0.22 25;
-    --chart-5: 0.70 0.10 280;
+    --chart-1: 0.68 0.18 195;
+    --chart-2: 0.72 0.22 25;
+    --chart-3: 0.82 0.17 90;
+    --chart-4: 0.60 0.26 350;
+    --chart-5: 0.65 0.20 150;
     
     /* Sidebar */
-    --sidebar: 0.18 0.025 250;
-    --sidebar-foreground: 0.92 0.008 240;
-    --sidebar-primary: 0.65 0.12 145;
-    --sidebar-primary-foreground: 0.15 0.02 145;
-    --sidebar-accent: 0.25 0.04 250;
-    --sidebar-accent-foreground: 0.92 0.008 240;
-    --sidebar-border: 0.25 0.04 250;
-    --sidebar-ring: 0.65 0.12 145;
+    --sidebar: 0.15 0.035 260;
+    --sidebar-foreground: 0.95 0.01 90;
+    --sidebar-primary: 0.68 0.18 195;
+    --sidebar-primary-foreground: 0.12 0.03 195;
+    --sidebar-accent: 0.22 0.045 270;
+    --sidebar-accent-foreground: 0.95 0.01 90;
+    --sidebar-border: 0.28 0.05 270;
+    --sidebar-ring: 0.68 0.18 195;
     
     /* Success & Warning states */
-    --success: 0.65 0.12 145;
-    --success-foreground: 0.15 0.02 145;
-    --warning: 0.70 0.14 75;
-    --warning-foreground: 0.15 0.02 75;
+    --success: 0.65 0.20 150;
+    --success-foreground: 0.12 0 0;
+    --warning: 0.78 0.18 65;
+    --warning-foreground: 0.12 0.03 65;
   }
 
   * {
@@ -169,6 +169,42 @@
     }
   }
   
+  /* Staggered fade-in for grid items */
+  @keyframes stagger-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Pulse animation for status indicators */
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 0 0 currentColor;
+    }
+    50% {
+      opacity: 0.8;
+      box-shadow: 0 0 8px 2px currentColor;
+    }
+  }
+  
+  /* Counter animation */
+  @keyframes count-up {
+    from {
+      transform: translateY(8px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
   .animate-skeleton {
     animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
@@ -179,5 +215,35 @@
   
   .animate-scale-in {
     animation: scale-in 0.3s ease-out;
+  }
+  
+  .animate-stagger-in {
+    animation: stagger-in 0.5s ease-out both;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  .animate-count-up {
+    animation: count-up 0.6s ease-out;
+  }
+  
+  /* Stagger delays */
+  .stagger-delay-1 { animation-delay: 0.1s; }
+  .stagger-delay-2 { animation-delay: 0.2s; }
+  .stagger-delay-3 { animation-delay: 0.3s; }
+  .stagger-delay-4 { animation-delay: 0.4s; }
+  
+  /* Glassmorphism utilities */
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .dark .glass {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 }

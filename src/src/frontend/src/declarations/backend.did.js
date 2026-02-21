@@ -1,4 +1,4 @@
- 
+/* eslint-disable */
 
 // @ts-nocheck
 
@@ -20,6 +20,14 @@ export const _CaffeineStorageRefillResult = IDL.Record({
   'topped_up_amount' : IDL.Opt(IDL.Nat),
 });
 export const Time = IDL.Int;
+export const AccountStatus = IDL.Variant({
+  'active' : IDL.Null,
+  'inactive' : IDL.Null,
+});
+export const AadhaarStatus = IDL.Variant({
+  'linked' : IDL.Null,
+  'unlinked' : IDL.Null,
+});
 export const Gender = IDL.Variant({
   'other' : IDL.Null,
   'female' : IDL.Null,
@@ -35,20 +43,14 @@ export const MaritalStatus = IDL.Variant({
 export const InputCitizen = IDL.Record({
   'id' : IDL.Text,
   'dob' : Time,
+  'accountStatus' : AccountStatus,
+  'aadhaarStatus' : AadhaarStatus,
   'scheme' : IDL.Text,
   'name' : IDL.Text,
   'gender' : Gender,
   'photo' : IDL.Opt(ExternalBlob),
   'amount' : IDL.Int,
   'maritalStatus' : MaritalStatus,
-});
-export const AccountStatus = IDL.Variant({
-  'active' : IDL.Null,
-  'inactive' : IDL.Null,
-});
-export const AadhaarStatus = IDL.Variant({
-  'linked' : IDL.Null,
-  'unlinked' : IDL.Null,
 });
 export const Citizen = IDL.Record({
   'id' : IDL.Text,
@@ -141,6 +143,14 @@ export const idlFactory = ({ IDL }) => {
     'topped_up_amount' : IDL.Opt(IDL.Nat),
   });
   const Time = IDL.Int;
+  const AccountStatus = IDL.Variant({
+    'active' : IDL.Null,
+    'inactive' : IDL.Null,
+  });
+  const AadhaarStatus = IDL.Variant({
+    'linked' : IDL.Null,
+    'unlinked' : IDL.Null,
+  });
   const Gender = IDL.Variant({
     'other' : IDL.Null,
     'female' : IDL.Null,
@@ -156,20 +166,14 @@ export const idlFactory = ({ IDL }) => {
   const InputCitizen = IDL.Record({
     'id' : IDL.Text,
     'dob' : Time,
+    'accountStatus' : AccountStatus,
+    'aadhaarStatus' : AadhaarStatus,
     'scheme' : IDL.Text,
     'name' : IDL.Text,
     'gender' : Gender,
     'photo' : IDL.Opt(ExternalBlob),
     'amount' : IDL.Int,
     'maritalStatus' : MaritalStatus,
-  });
-  const AccountStatus = IDL.Variant({
-    'active' : IDL.Null,
-    'inactive' : IDL.Null,
-  });
-  const AadhaarStatus = IDL.Variant({
-    'linked' : IDL.Null,
-    'unlinked' : IDL.Null,
   });
   const Citizen = IDL.Record({
     'id' : IDL.Text,

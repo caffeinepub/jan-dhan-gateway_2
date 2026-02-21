@@ -1,4 +1,4 @@
- 
+/* eslint-disable */
 
 // @ts-nocheck
 
@@ -37,6 +37,8 @@ export type Gender = { 'other' : null } |
 export interface InputCitizen {
   'id' : string,
   'dob' : Time,
+  'accountStatus' : AccountStatus,
+  'aadhaarStatus' : AadhaarStatus,
   'scheme' : string,
   'name' : string,
   'gender' : Gender,

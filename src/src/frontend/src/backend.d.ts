@@ -40,6 +40,8 @@ export interface Transaction {
 export interface InputCitizen {
     id: string;
     dob: Time;
+    accountStatus: AccountStatus;
+    aadhaarStatus: AadhaarStatus;
     scheme: string;
     name: string;
     gender: Gender;

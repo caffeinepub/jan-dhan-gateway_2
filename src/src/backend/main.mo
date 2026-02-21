@@ -6,9 +6,11 @@ import Map "mo:core/Map";
 import Iter "mo:core/Iter";
 import Order "mo:core/Order";
 import MixinStorage "blob-storage/Mixin";
+import Migration "migration";
 import Storage "blob-storage/Storage";
 import VarArray "mo:core/VarArray";
 
+(with migration = Migration.run)
 actor {
   include MixinStorage();
 
@@ -91,6 +93,8 @@ actor {
     scheme : Text;
     amount : Int;
     photo : ?Storage.ExternalBlob;
+    accountStatus : AccountStatus;
+    aadhaarStatus : AadhaarStatus;
   };
 
   public shared ({ caller }) func addCitizen(input : InputCitizen) : async () {
@@ -104,8 +108,8 @@ actor {
       dob = input.dob;
       gender = input.gender;
       maritalStatus = input.maritalStatus;
-      accountStatus = #active;
-      aadhaarStatus = #unlinked;
+      accountStatus = input.accountStatus;
+      aadhaarStatus = input.aadhaarStatus;
       scheme = input.scheme;
       amount = input.amount;
       lastClaim = null;
@@ -126,8 +130,8 @@ actor {
             dob = input.dob;
             gender = input.gender;
             maritalStatus = input.maritalStatus;
-            accountStatus = #active;
-            aadhaarStatus = #unlinked;
+            accountStatus = input.accountStatus;
+            aadhaarStatus = input.aadhaarStatus;
             scheme = input.scheme;
             amount = input.amount;
             lastClaim = null;
